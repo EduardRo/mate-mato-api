@@ -12,7 +12,12 @@ class SerieController extends Controller
      */
     public function index()
     {
-        //
+        $series = Serie::all()->toArray();
+        foreach ($series as $serie){
+            $pr=json_encode($serie);
+            print_r($pr);
+        }
+        
     }
 
     /**
