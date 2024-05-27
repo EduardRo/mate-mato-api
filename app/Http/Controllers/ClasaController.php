@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Serie;
+use App\Models\Clasa;
 use Illuminate\Http\Request;
 
-class SerieController extends Controller
+class ClasaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $serie_array=[];
-        //$series = Serie::all()->toArray();
-        $series = Serie::all();
-        foreach ($series as $serie){
-            $pr=($serie);
-            array_push($serie_array,$pr);
+        $clase_array=[];
+        $clase = Clasa::all();
+        foreach($clase as $clasa){
             
+            array_push($clase_array,$clasa);
         }
 
-        print_r(json_encode($my_array));
-        
+        print_r(json_encode($clase_array));
+
+
     }
 
     /**
@@ -36,7 +35,7 @@ class SerieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Serie $serie)
+    public function show(Clasa $clasa)
     {
         //
     }
@@ -44,7 +43,7 @@ class SerieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Serie $serie)
+    public function update(Request $request, Clasa $clasa)
     {
         //
     }
@@ -52,7 +51,7 @@ class SerieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Serie $serie)
+    public function destroy(Clasa $clasa)
     {
         //
     }
