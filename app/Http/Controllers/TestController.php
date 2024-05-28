@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Clasa;
 use Illuminate\Http\Request;
 
-class ClasaController extends Controller
+class TestController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $clase_array=[];
-        $clase = Clasa::where('valabil', 1)->get();
-        foreach($clase as $clasa){
-            
-            array_push($clase_array,$clasa);
-        }
-
-        print_r(json_encode($clase_array));
-
-
+        //
+    }
+     /**
+     * Create the test from the codserie.
+     */
+    public function test(Request $request)
+    {
+        return $codclasa = $request->route('codserie');
     }
 
     /**
@@ -35,7 +32,7 @@ class ClasaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Clasa $clasa)
+    public function show(string $id)
     {
         //
     }
@@ -43,7 +40,7 @@ class ClasaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Clasa $clasa)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -51,7 +48,7 @@ class ClasaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Clasa $clasa)
+    public function destroy(string $id)
     {
         //
     }

@@ -10,18 +10,19 @@ class SerieController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $codclasa = $request->route('codclasa');
         $serie_array=[];
         //$series = Serie::all()->toArray();
-        $series = Serie::all();
+        $series = Serie::where('codclasa',$codclasa)->get();
         foreach ($series as $serie){
             $pr=($serie);
             array_push($serie_array,$pr);
             
         }
 
-        print_r(json_encode($my_array));
+        print_r(json_encode($serie_array));
         
     }
 
