@@ -3,23 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Helpers\MyTeste;
 
 class TestController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource.php
      */
     public function index()
     {
         //
     }
+
      /**
      * Create the test from the codserie.
      */
     public function test(Request $request)
     {
-        return $codclasa = $request->route('codserie');
+        //$myTesteInstance = new MyTeste();
+        $codserie = $request->route('codserie');
+        //$myTesteInstance->createtest($codserie);
+        if (class_exists(MyTeste::class)) {
+            echo "Class MyTeste exists<br>";
+            $myTesteInstance = new MyTeste();
+            $myTesteInstance->createtest($codserie); // This will echo "TestCode bla bla"
+        } else {
+            echo "Class MyTeste does not exist<br>";
+        }
     }
+        
+        
+    
 
     /**
      * Store a newly created resource in storage.
