@@ -24,9 +24,10 @@ class TestController extends Controller
         $codserie = $request->route('codserie');
         //$myTesteInstance->createtest($codserie);
         if (class_exists(MyTeste::class)) {
-            echo "Class MyTeste exists<br>";
+            //echo "Class MyTeste exists<br>";
             $myTesteInstance = new MyTeste();
-            $myTesteInstance->createtest($codserie); // This will echo "TestCode bla bla"
+            print_r(json_encode($myTesteInstance->createtest($codserie))); // This will echo "TestCode bla bla"
+            //print_r(json_encode($serie_array));
         } else {
             echo "Class MyTeste does not exist<br>";
         }
