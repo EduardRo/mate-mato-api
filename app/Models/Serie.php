@@ -11,4 +11,6 @@ class Serie extends Model
     protected $table='serii';
 
     protected $fillable=['codclasa','codmaterie','codserie','ordine'];
+
+    
 }
