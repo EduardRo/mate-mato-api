@@ -11,44 +11,27 @@ class MyTeste {
         FROM serii s 
         JOIN tests t ON t.codserie = s.codserie WHERE s.codserie = ?', [$codserie]);
 
-        $selectedTests = $this->randomizeTests($tests);
+        //$selectedTests = $this->randomizeTests($tests);
+        $selectedTests = $this->getRandomTests($tests); 
         //$this->randomizeTests($tests);
         //randomizeTests($tests);
+        //echo '<br><br>';
         //print_r(json_encode($selectedTests));
+        //echo '<br><br>';
         //return $selectedTests;
         $result = $this->randomizeAndMap(json_encode($selectedTests));
 
         // Print result
-        print_r(json_encode($result));
+        // print_r(json_encode($result));
+        return $result;
     }
 
-
-    private function randomizeTests($data) {
-        // Convert the data to an array if it is a collection
-        if ($data instanceof \Illuminate\Support\Collection) {
-            $data = $data->toArray();
-        }
-    
-        // Extract 'codtest' values from the array of objects
-        $codtestArray = array_map(function($item) {
-            return $item->codtest;
-        }, $data);
-    
-        // Shuffle the array to randomize the elements
-        shuffle($codtestArray);
-    
-        // Initialize the array for selected codtest values
+    private function getRandomTests($data) {
         $randomTests = [];
-    
-        // Number of elements to select
         $numToSelect = 5;
-    
-        // Handle the case where the array has fewer elements than required
-        if (count($codtestArray) < $numToSelect) {
-            // Repeat elements to make up the count but avoid consecutive duplicates
+        if (count($data) < $numToSelect) {
             while (count($randomTests) < $numToSelect) {
-                foreach ($codtestArray as $element) {
-                    // Ensure no consecutive duplicates
+                foreach ($data as $element) {
                     if (count($randomTests) == 0 || end($randomTests) != $element) {
                         $randomTests[] = $element;
                         if (count($randomTests) == $numToSelect) {
@@ -58,10 +41,69 @@ class MyTeste {
                 }
             }
         } else {
+            for ($i = 0; $i < $numToSelect; $i++) {
+                $nextElement = null;
+                do {
+                    $randomNumber = rand(0, count($data) - 1);
+                    $nextElement = $data[$randomNumber];
+                } while (count($randomTests) > 0 && end($randomTests) == $nextElement);
+                $randomTests[] = $nextElement;
+            }
+        }
+        return $randomTests;
+    }
+    private function randomizeTests($data) {
+        // This function is not used anymore because getRandomTests is used instead
+        // Convert the data to an array if it is a collection
+        if ($data instanceof \Illuminate\Support\Collection) {
+            $data = $data->toArray();
+        }
+    
+        // Extract 'codtest' values from the array of objects
+        $codtestArray = array_map(function($item) {
+            return $item->codtest;
+        }, $data);
+        //print_r($codtestArray);
+    
+        // Shuffle the array to randomize the elements
+        shuffle($codtestArray);
+    
+        // Initialize the array for selected codtest values
+        $randomTests = [];
+    
+        // Number of elements to select
+        $numToSelect = 5;
+       
+
+
+        // Handle the case where the array has fewer elements than required
+        if (count($codtestArray) < $numToSelect) {
+            // Repeat elements to make up the count but avoid consecutive duplicates
+            while (count($randomTests) < $numToSelect) {
+                foreach ($codtestArray as $element) {
+                   
+                    // Ensure no consecutive duplicates
+                    if (count($randomTests) == 0 || end($randomTests) != $element) {
+                        $randomTests[] = $element;
+                        if (count($randomTests) == $numToSelect) {
+                            break;
+                        }
+                    }
+                }
+
+               
+            }
+        } else {
             // Select up to 5 elements, repeating if necessary but avoiding consecutive duplicates
             for ($i = 0; $i < $numToSelect; $i++) {
                 $nextElement = null;
-    
+                //---------------
+                // Must change the function because it is not working. I get only 2 values.
+                echo "<br><br>";
+                $randomNumber=rand(0,count($codtestArray));
+                echo $randomNumber . " bla bla bal <br><br>";
+
+                //----------------------
                 // Find a suitable next element that is not the same as the last selected element
                 foreach ($codtestArray as $element) {
                     if (empty($randomTests) || $element !== end($randomTests)) {
@@ -113,6 +155,7 @@ class MyTeste {
     }
 
     private function randomizeAndMap($data) {
+        // print_r($data);
         // Convert JSON string to array if needed
         if (is_string($data)) {
             $data = json_decode($data, true);
@@ -124,13 +167,14 @@ class MyTeste {
             // Collect v1, v2, v3, v4 and raspuns into an array
             $vFields = [$item['v1'], $item['v2'], $item['v3'], $item['v4']];
             shuffle($vFields);
-    
+            //print_r($vFields);
             // Assign the first three elements as v1, v2, r
             $newItem = [];
             $newItem['codserie'] = $item['codserie'];
             $newItem['denumireserie'] = $item['denumireserie'];
             $newItem['codtest'] = $item['codtest'];
             $newItem['enunt'] = $item['enunt'];
+            $newItem['calea']=$item['calea'];
             
             $vItem = [];
             // Randomly assign the first three elements from the shuffled array
