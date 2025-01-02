@@ -20,7 +20,15 @@ class RezultatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Save the results from the quiz in the database
+
+        $rezultat = new Rezultat();
+        $rezultat->iduser = $request->iduser;
+        $rezultat->idtest = $request->idtest;
+        $rezultat->punctaj = $request->punctaj;
+        $rezultat->raspuns = $request->raspuns;
+        $rezultat->save();
+        return  $request->all();
     }
 
     /**
