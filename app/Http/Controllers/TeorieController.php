@@ -58,7 +58,8 @@ class TeorieController extends Controller
                 'tests.id as test_id',
                 'tests.codtest',
                 'tests.enunt',
-                'tests.raspuns'
+                'tests.raspuns',
+                'tests.calea'
             )
             ->orderBy('serii.codmaterie')
             ->orderBy('serii.codserie')

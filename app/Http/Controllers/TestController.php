@@ -27,15 +27,16 @@ class TestController extends Controller
             //echo "Class MyTeste exists<br>";
             $myTesteInstance = new MyTeste();
             //print_r($myTesteInstance->createtest($codserie));
-            print_r(json_encode($myTesteInstance->createTest($codserie))); // This will echo "TestCode bla bla"
+            //print_r(json_encode($myTesteInstance->createTest($codserie))); // This will echo "TestCode bla bla"
+            return response()->json($myTesteInstance->createTest($codserie));
             //print_r(json_encode($serie_array));
         } else {
             echo "Class MyTeste does not exist<br>";
         }
     }
-        
-        
-    
+
+
+
 
     /**
      * Store a newly created resource in storage.
