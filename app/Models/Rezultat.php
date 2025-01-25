@@ -10,5 +10,15 @@ class Rezultat extends Model
     use HasFactory;
     protected $table='rezultate';
 
-    protected $fillable=['iduser','idtest','punctaj','raspuns'];
+    protected $fillable=[
+        'iduser',
+        'idtest',
+        'codserie',
+        'codtest',
+        'punctaj',
+        'enunt',
+        'raspuns',
+        'raspuns_corect',
+        'calea'
+    ];
 }

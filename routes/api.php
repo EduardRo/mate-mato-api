@@ -34,8 +34,14 @@ Route::get('/clase',[ClasaController::class,'index']);
 
 Route::get('/test/{codserie}',[TestController::class, 'test']);
 
-Route::post('/save/results',[RezultatController::class, 'store']);
+
 
 Route::get('/teorie/{codclasa}',[TeorieController::class, 'serii']);
 
 Route::get('/teorie/{codclasa}/{codserie}',[TeorieController::class, 'teste']);
+
+
+
+// Salvare rezultate test
+
+Route::post('/save-resultat', [RezultatController::class, 'store'])->middleware('auth:api');

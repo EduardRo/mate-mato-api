@@ -19,17 +19,40 @@ class RezultatController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        // Save the results from the quiz in the database
+{
+    // Debug: Log the authenticated user
+    \Log::info('Authenticated User:', ['user' => auth()->user()]);
 
-        $rezultat = new Rezultat();
-        $rezultat->iduser = $request->iduser;
-        $rezultat->idtest = $request->idtest;
-        $rezultat->punctaj = $request->punctaj;
-        $rezultat->raspuns = $request->raspuns;
-        $rezultat->save();
-        return  $request->all();
+    if (!auth()->check()) {
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
+
+    // Validate the request data
+    $request->validate([
+        'iduser' => 'required|integer',
+        'idtest' => 'required|integer',
+        'codserie' => 'required|string',
+        'codtest' => 'required|string',
+        'punctaj' => 'required|integer',
+        'raspuns' => 'required|string',
+        'correctanswer' => 'required|string',
+        'calea' => 'required|string',
+    ]);
+
+    // Save the results
+    $rezultat = new Rezultat();
+    $rezultat->iduser = $request->iduser;
+    $rezultat->idtest = $request->idtest;
+    $rezultat->codserie = $request->codserie;
+    $rezultat->codtest = $request->codtest;
+    $rezultat->punctaj = $request->punctaj;
+    $rezultat->raspuns = $request->raspuns;
+    $rezultat->raspuns_corect = $request->correctanswer;
+    $rezultat->calea = $request->calea;
+    $rezultat->save();
+
+    return response()->json(['message' => 'Results saved successfully', 'data' => $rezultat], 201);
+}
 
     /**
      * Display the specified resource.
