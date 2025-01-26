@@ -20,13 +20,14 @@ class RezultatController extends Controller
      */
     public function store(Request $request)
 {
+    /*
     // Debug: Log the authenticated user
     \Log::info('Authenticated User:', ['user' => auth()->user()]);
 
     if (!auth()->check()) {
         return response()->json(['error' => 'Unauthorized'], 401);
     }
-
+    */
     // Validate the request data
     $request->validate([
         'iduser' => 'required|integer',
@@ -34,8 +35,9 @@ class RezultatController extends Controller
         'codserie' => 'required|string',
         'codtest' => 'required|string',
         'punctaj' => 'required|integer',
+        'enunt'=>'required|string',
         'raspuns' => 'required|string',
-        'correctanswer' => 'required|string',
+        'raspuns_corect' => 'required|string',
         'calea' => 'required|string',
     ]);
 
@@ -46,8 +48,9 @@ class RezultatController extends Controller
     $rezultat->codserie = $request->codserie;
     $rezultat->codtest = $request->codtest;
     $rezultat->punctaj = $request->punctaj;
+    $rezultat->enunt = $request->enunt;
     $rezultat->raspuns = $request->raspuns;
-    $rezultat->raspuns_corect = $request->correctanswer;
+    $rezultat->raspuns_corect = $request->raspuns_corect;
     $rezultat->calea = $request->calea;
     $rezultat->save();
 

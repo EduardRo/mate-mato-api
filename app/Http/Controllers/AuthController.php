@@ -61,7 +61,7 @@ class AuthController extends Controller
     }
 
     // Handle the provider's callback
-    public function handleProviderCallback($provider)
+/*  Old code:  public function handleProviderCallback($provider)
     {
         // Retrieve the user data from the provider
         $socialUser = Socialite::driver($provider)->stateless()->user();
@@ -82,12 +82,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->accessToken;
 
         // Return a JSON response with the token
-        /*
-        return response()->json([
-            'token' => $token,
-            'user' => $user,
-        ], 200);
-        */
+
         // Redirect to the Vue3 app with the token as a query parameter
         return redirect()->away(
             'http://localhost:5173/auth/callback?token=' . $token . '&user=' . json_encode([
@@ -96,5 +91,40 @@ class AuthController extends Controller
             ])
         );
 
+    } */
+
+
+    public function handleProviderCallback($provider)
+    {
+        // Retrieve the user data from the provider
+        $socialUser = Socialite::driver($provider)->stateless()->user();
+
+        // Find or create the user in your database
+        $user = User::firstOrCreate(
+            ['email' => $socialUser->getEmail()],
+            [
+                'name' => $socialUser->getName(),
+                'password' => Hash::make(uniqid()), // Random password
+            ]
+        );
+        Auth::login($user, true);
+
+
+        // Generate a Passport token
+        $tokenResult = $user->createToken('auth_token'); // Returns PersonalAccessTokenResult
+        $accessToken = $tokenResult->accessToken; // Extract the plain-text token
+
+        // Log the token for debugging
+        \Log::info('Generated Token:', ['token' => $accessToken]);
+
+        // Redirect to the Vue app with the token
+        return redirect()->away(
+            'http://localhost:5173/auth/callback?token=' . urlencode($accessToken) . '&user=' . json_encode([
+                'name' => $user->name,
+                'email' => $user->email,
+            ])
+        );
     }
+
+
 }
