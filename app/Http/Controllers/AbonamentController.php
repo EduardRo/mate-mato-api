@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Clasa;
+use App\Models\Abonament;
 use Illuminate\Http\Request;
 
-class ClasaController extends Controller
+class AbonamentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $clase_array=[];
-        $clase = Clasa::where('valabil', 1)->get();
-        foreach($clase as $clasa){
+        //
+        return response()->json(Abonament::all());
+    }
 
-            array_push($clase_array,$clasa);
-        }
-
-        //print_r(json_encode($clase_array));
-        return response()->json($clase_array);
-
-
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -36,7 +35,15 @@ class ClasaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Clasa $clasa)
+    public function show(Abonament $abonament)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Abonament $abonament)
     {
         //
     }
@@ -44,7 +51,7 @@ class ClasaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Clasa $clasa)
+    public function update(Request $request, Abonament $abonament)
     {
         //
     }
@@ -52,7 +59,7 @@ class ClasaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Clasa $clasa)
+    public function destroy(Abonament $abonament)
     {
         //
     }

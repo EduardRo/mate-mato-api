@@ -12,13 +12,8 @@ class Rezultat extends Model
 
     protected $fillable=[
         'iduser',
-        'idtest',
         'codserie',
-        'codtest',
         'punctaj',
-        'enunt',
-        'raspuns',
-        'raspuns_corect',
-        'calea'
+
     ];
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\ClasaController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\RezultatController;
 use App\Http\Controllers\TeorieController;
+use App\Http\Controllers\AbonamentController;
 
 use App\Http\Controllers\AuthController;
 
@@ -40,7 +41,7 @@ Route::get('/teorie/{codclasa}',[TeorieController::class, 'serii']);
 
 Route::get('/teorie/{codclasa}/{codserie}',[TeorieController::class, 'teste']);
 
-
+Route::get('/abonamente', [AbonamentController::class, 'index']);
 
 // Salvare rezultate test
 

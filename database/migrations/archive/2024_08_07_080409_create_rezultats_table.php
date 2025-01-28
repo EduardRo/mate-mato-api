@@ -14,14 +14,8 @@ return new class extends Migration
         Schema::create('rezultats', function (Blueprint $table) {
             $table->id();
             $table->integer('iduser');
-            $table->integer('idtest');
             $table->integer('codserie');
-            $table->integer('codtest');
             $table->integer('punctaj');
-            $table->text('enunt');
-            $table->text('raspuns');
-            $table->text('raspuns_corect');
-            $table->text('calea');
             $table->timestamps();
         });
     }

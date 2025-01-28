@@ -103,6 +103,7 @@ class AuthController extends Controller
         $user = User::firstOrCreate(
             ['email' => $socialUser->getEmail()],
             [
+
                 'name' => $socialUser->getName(),
                 'password' => Hash::make(uniqid()), // Random password
             ]
@@ -120,6 +121,7 @@ class AuthController extends Controller
         // Redirect to the Vue app with the token
         return redirect()->away(
             'http://localhost:5173/auth/callback?token=' . urlencode($accessToken) . '&user=' . json_encode([
+                'iduser' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
             ])
