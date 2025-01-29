@@ -47,3 +47,6 @@ Route::get('/abonamente', [AbonamentController::class, 'index']);
 
 //Route::post('/save-resultat', [RezultatController::class, 'store'])->middleware('auth:api');
 Route::post('/save-resultat', [RezultatController::class, 'store']);
+
+// Afisare calculate score
+Route::post('/calculate-score', [RezultatController::class, 'ScoreCalculation'])->middleware('auth:api');

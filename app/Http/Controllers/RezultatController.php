@@ -68,4 +68,56 @@ class RezultatController extends Controller
     {
         //
     }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function ScoreCalculation(Request $request)
+{
+    try {
+        // Log request data for debugging
+        \Log::info('Request data:', $request->all());
+
+        // Get authenticated user
+        $user = $request->user();
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        // Validate request
+        $request->validate([
+            'codserie' => 'required|string'
+        ]);
+
+        // Log user and codserie
+        \Log::info('User:', ['id' => $user->id]);
+        \Log::info('Codserie:', ['codserie' => $request->codserie]);
+
+        // Get all results for the user and codserie
+        $results = Rezultat::where('iduser', $user->id)
+            ->where('codserie', $request->codserie)
+            ->get();
+
+        // Calculate total and average
+        $total = $results->sum('punctaj');
+        $count = $results->count();
+        $average = $count > 0 ? $total / $count : 0;
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'user_id' => $user->id,
+                'codserie' => $request->codserie,
+                'total_score' => $total,
+                'average_score' => round($average, 2),
+                'attempts' => $count
+            ]
+        ]);
+    } catch (\Exception $e) {
+        // Log the error for debugging
+        \Log::error('Error in ScoreCalculation:', ['error' => $e->getMessage()]);
+        return response()->json(['error' => 'Internal Server Error'], 500);
+    }
+}
+
 }
