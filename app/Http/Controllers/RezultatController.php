@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rezultat;
+use App\Models\Serie;
 use Illuminate\Http\Request;
 
 class RezultatController extends Controller
@@ -48,10 +49,31 @@ class RezultatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Rezultat $rezultat)
+    public function show(Request $request)
     {
-        //
+        $rezultate_user = Rezultat::where('iduser', $request->id)
+        ->orderby('codserie', 'asc')
+        ->orderby('created_at', 'asc')
+        ->get();
+        return response()->json($rezultate_user);
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function rezultate_user_serii(Request $request)
+{
+    $rezultate_user = Rezultat::join('serii', 'rezultats.codserie', '=', 'serii.codserie')
+        ->where('rezultats.iduser', $request->id)
+        ->where('rezultats.codserie', $request->codserie)
+        ->orderBy('rezultats.codserie', 'asc')
+        ->orderBy('rezultats.created_at', 'asc')
+        ->select('rezultats.*', 'serii.denumireserie') // Include denumireserie in the result
+        ->get();
+
+    return response()->json($rezultate_user);
+}
+
 
     /**
      * Update the specified resource in storage.

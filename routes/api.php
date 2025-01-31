@@ -43,10 +43,14 @@ Route::get('/teorie/{codclasa}/{codserie}',[TeorieController::class, 'teste']);
 
 Route::get('/abonamente', [AbonamentController::class, 'index']);
 
-// Salvare rezultate test
+// Rezultate Controller paths
 
 //Route::post('/save-resultat', [RezultatController::class, 'store'])->middleware('auth:api');
-Route::post('/save-resultat', [RezultatController::class, 'store']);
+Route::post('/save-resultat', [RezultatController::class, 'store'])->middleware('auth:api');
 
 // Afisare calculate score
 Route::post('/calculate-score', [RezultatController::class, 'ScoreCalculation'])->middleware('auth:api');
+
+Route::get('/rezultate/{id}/{codserie}', [RezultatController::class, 'rezultate_user_serii']);
+
+Route::get('/rezultate/{id}', [RezultatController::class, 'show']);
