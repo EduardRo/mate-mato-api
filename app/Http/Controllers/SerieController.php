@@ -19,11 +19,12 @@ class SerieController extends Controller
         foreach ($series as $serie){
             $pr=($serie);
             array_push($serie_array,$pr);
-            
+
         }
 
-        print_r(json_encode($serie_array));
-        
+        //print_r(json_encode($serie_array));
+        return response()->json($serie_array);
+
     }
 
     /**
