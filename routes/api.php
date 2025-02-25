@@ -54,3 +54,6 @@ Route::post('/calculate-score', [RezultatController::class, 'ScoreCalculation'])
 Route::get('/rezultate/{id}/{codserie}', [RezultatController::class, 'rezultate_user_serii']);
 
 Route::get('/rezultate/{id}', [RezultatController::class, 'show']);
+
+// Route for accessing AI and return something.
+
